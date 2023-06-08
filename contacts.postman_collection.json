@@ -1,0 +1,445 @@
+{
+	"info": {
+		"_postman_id": "e149e2ac-4868-4362-9c8c-ba22138f7f81",
+		"name": "Contact Book API Requests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2645049"
+	},
+	"item": [
+		{
+			"name": "Save a new contact",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('it should save a valid contact', () => {\r",
+							"    pm.response.to.have.status(201)\r",
+							"    const response = pm.response.json()\r",
+							"    const { contact } = response\r",
+							"    pm.expect(contact._id).to.not.null\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"name\": \"{{contactName}}\",\r\n\t\"email\": \"sidney@email.com\",\r\n\t\"phone\": \"(99) 99999-9999\",\r\n\t\"birthday\": \"2004-02-29\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/contacts",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save a new contact with invalid name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('it should not save a contact with invalid name', () => {\r",
+							"    pm.response.to.have.status(400)\r",
+							"    const response = pm.response.json()\r",
+							"    const { errorMessages } = response\r",
+							"    pm.expect(errorMessages[0]).to.equal('Name cannot be empty')\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"name\": \"\",\r\n\t\"email\": \"sidney@email.com\",\r\n\t\"phone\": \"(99) 99999-9999\",\r\n\t\"birthday\": \"2004-02-29\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/contacts",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save a new contact with invalid email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('it should not save a contact with invalid email', () => {\r",
+							"    pm.response.to.have.status(400)\r",
+							"    const response = pm.response.json()\r",
+							"    const { errorMessages } = response\r",
+							"    pm.expect(errorMessages[0]).to.equal('Invalid email')\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"name\": \"Sidney Sousa\",\r\n\t\"email\": \"sidney.email.com\",\r\n\t\"phone\": \"(99) 99999-9999\",\r\n\t\"birthday\": \"2004-02-29\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/contacts",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save a new contact with invalid phone",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('it should not save a contact with invalid phone', () => {\r",
+							"    pm.response.to.have.status(400)\r",
+							"    const response = pm.response.json()\r",
+							"    const { errorMessages } = response\r",
+							"    pm.expect(errorMessages[0]).to.equal('Phone must have following pattern: (00) 00000-0000')\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"name\": \"Sidney Sousa\",\r\n\t\"email\": \"sidney@email.com\",\r\n\t\"phone\": \"(99)99999-9999\",\r\n\t\"birthday\": \"2004-02-29\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/contacts",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save a new contact with invalid birthday",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('it should not save a contact with invalid birthday', () => {\r",
+							"    pm.response.to.have.status(400)\r",
+							"    const response = pm.response.json()\r",
+							"    const { errorMessages } = response\r",
+							"    pm.expect(errorMessages[0]).to.equal('Birthday must be previous to today')\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"name\": \"Sidney Sousa\",\r\n\t\"email\": \"sidney@email.com\",\r\n\t\"phone\": \"(99) 99999-9999\",\r\n\t\"birthday\": \"2025-10-28\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/contacts",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find contacts by name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('should retrieve correct contacts', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"    const response = pm.response.json()\r",
+							"    const { contacts } = response\r",
+							"    pm.expect(contacts.length).to.greaterThan(0)\r",
+							"    const contactName = pm.collectionVariables.get('contactName')\r",
+							"    const contact = contacts[0]\r",
+							"    const verification = contact.name.toLowerCase().includes(contactName.toLowerCase())\r",
+							"    pm.expect(verification).to.equal(true)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/contacts/name/{{contactName}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"contacts",
+						"name",
+						"{{contactName}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find contacts by name substring",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('should retrieve correct contacts', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"    const response = pm.response.json()\r",
+							"    const { contacts } = response\r",
+							"    pm.expect(contacts.length).to.greaterThan(0)\r",
+							"    const contactName = pm.collectionVariables.get('contactNameSubStr')\r",
+							"    const contact = contacts[0]\r",
+							"    const verification = contact.name.toLowerCase().includes(contactName.toLowerCase())\r",
+							"    pm.expect(verification).to.equal(true)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/contacts/name/{{contactNameSubStr}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"contacts",
+						"name",
+						"{{contactNameSubStr}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FInd contacts by birthday period",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('should retrieve correct contacts by birthday period', () => {\r",
+							"    pm.response.to.have.status(200)\r",
+							"    const response = pm.response.json()\r",
+							"    const { contacts } = response\r",
+							"    pm.expect(contacts.length).to.greaterThan(0)\r",
+							"    const start = pm.collectionVariables.get('startDate')\r",
+							"    const end = pm.collectionVariables.get('endDate')\r",
+							"    const startDate = new Date(start)\r",
+							"    const endDate = new Date(end)\r",
+							"\r",
+							"    contacts.forEach((c) => {\r",
+							"        const { birthday } = c\r",
+							"        const birthdayDate = new Date(birthday)\r",
+							"        const verification = birthdayDate >= startDate && birthdayDate <= endDate\r",
+							"        pm.expect(verification).to.equal(true)\r",
+							"    })\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/contacts/birthday?start={{startDate}}&end={{endDate}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"contacts",
+						"birthday"
+					],
+					"query": [
+						{
+							"key": "start",
+							"value": "{{startDate}}"
+						},
+						{
+							"key": "end",
+							"value": "{{endDate}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FInd contacts with birthday period start date greater than end date",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('should not retrieve contacts when start date is greater than end date', () => {\r",
+							"    pm.response.to.have.status(400)\r",
+							"    const response = pm.response.json()\r",
+							"    const { errorMessages } = response\r",
+							"    const message = errorMessages[0]\r",
+							"    pm.expect(message).to.equal('Start date cannot be greater than end date')\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/contacts/birthday?start={{endDate}}&end={{startDate}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"contacts",
+						"birthday"
+					],
+					"query": [
+						{
+							"key": "start",
+							"value": "{{endDate}}"
+						},
+						{
+							"key": "end",
+							"value": "{{startDate}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:3001",
+			"type": "string"
+		},
+		{
+			"key": "contactName",
+			"value": "Sidney Sousa",
+			"type": "string"
+		},
+		{
+			"key": "contactNameSubStr",
+			"value": "OUS",
+			"type": "string"
+		},
+		{
+			"key": "startDate",
+			"value": "1990-01-01",
+			"type": "string"
+		},
+		{
+			"key": "endDate",
+			"value": "2010-12-31",
+			"type": "string"
+		}
+	]
+}
